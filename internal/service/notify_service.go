@@ -35,16 +35,12 @@ func (s *NotifyService) Notify(notifyRequest request.NotifyRequest) (*response.N
 
 	if err != nil {
 		return nil, fmt.Errorf("fetch user commit email had errors: %v", err)
-	} else {
-		fmt.Printf("successfully fetched user email: %v", email)
 	}
 
 	userID, err := s.slackClient.UserLookupByEmail(email)
 
 	if err != nil {
 		return nil, fmt.Errorf("user lookup by email had errors: %v", err)
-	} else {
-		fmt.Printf("successfully fetched user id: %v", userID)
 	}
 
 	if err := s.slackClient.SendMessage(userID, notifyRequest.Message); err != nil {
