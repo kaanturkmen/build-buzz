@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/kaanturkmen/build-buzz/internal/config"
 	"net/http"
+	"strings"
 )
 
 const (
@@ -72,6 +73,11 @@ func (c *GithubClient) FetchUserCommitEmail(username string, overrides config.Em
 
 		for _, commit := range commits {
 			email := commit.Commit.Author.Email
+
+			if strings.Contains(email, "@users.noreply.github.com") {
+				continue
+			}
+
 			if overrideEmail, ok := overrides[email]; ok {
 				return overrideEmail, nil
 			}
