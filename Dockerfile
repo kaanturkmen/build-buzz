@@ -1,3 +1,5 @@
+FROM golang:1.22-alpine as builder
+
 WORKDIR /src
 COPY go.mod ./
 COPY . .
